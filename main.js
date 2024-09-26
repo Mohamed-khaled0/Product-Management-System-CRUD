@@ -87,7 +87,7 @@ for(let i = 0 ; i < dataPro.length ; i++ ){
                         <td>${dataPro[i].total}</td>
                         <td>${dataPro[i].categoryField}</td>
                         <td><button id="update" >update</button></td>
-                        <td><button id="delete" >delete</button></td>
+                        <td><button onclick ="deleteProduct(${i});" id="delete" >delete</button></td>
 </tr>`;
 }
 document.getElementById('tbody').innerHTML = table;
@@ -97,8 +97,11 @@ showData ();
 //count 
 
 //delete 
-function deleteProduct(){
-    
+function deleteProduct(i){
+dataPro.splice(i,1); // there is a deleting here but only on array 
+localStorage.products = JSON.stringify(dataPro);
+showData ();
+
 }
 // update
 //search
