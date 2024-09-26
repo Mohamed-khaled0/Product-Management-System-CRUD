@@ -55,7 +55,8 @@ let newPro = {
 dataPro.push(newPro); // Save data into this array 
 localStorage.setItem("products" , JSON.stringify(dataPro)); // stringify To change the type of data 
 console.log(dataPro);
-clearData()
+clearData();
+showData ();
 }
 
 
@@ -70,9 +71,35 @@ function clearData(){
     count.value= '';
     categoryField.value= '';
 };
+
 // read products after create 
+function showData (){
+let table = ''
+for(let i = 0 ; i < dataPro.length ; i++ ){
+    table +=   // +  => To keep all old products 
+`<tr>
+                        <td>2${i}</td>
+                        <td>${dataPro[i].title}</td>
+                        <td>${dataPro[i].price}</td>
+                        <td>${dataPro[i].taxes}</td>
+                        <td>${dataPro[i].ads}</td>
+                        <th>${dataPro[i].discount}</th>
+                        <td>${dataPro[i].total}</td>
+                        <td>${dataPro[i].categoryField}</td>
+                        <td><button id="update" >update</button></td>
+                        <td><button id="delete" >delete</button></td>
+</tr>`;
+}
+document.getElementById('tbody').innerHTML = table;
+}
+showData ();
+
 //count 
+
 //delete 
+function deleteProduct(){
+    
+}
 // update
 //search
 // cleaning data for search 
