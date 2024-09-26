@@ -23,7 +23,7 @@ body{
 
 input{
     width: 100%;
-    height: 30px;
+    height: 20px;
     border: none;
     outline: none;
     margin: 3px;
@@ -36,7 +36,6 @@ input{
 input:focus{
 background-color: black;
 transform: scale(1.01);
-transition: 0.5s;
 }
 
 .price input{
@@ -44,15 +43,17 @@ width: 20%;
 }
 
 #total{
-    background-color: rgb(57, 172, 42);
+    background-color: red;
     padding: 4px 2px;
     border-radius: 4px;
 }
+
 #total::before{
-    content: 'total';
+    content: 'Total : ';
 }
 
 button{
+   
     width: 100%;
     height: 30px;
     border: none;
@@ -60,10 +61,35 @@ button{
     margin: 3px;
     border-radius: 15px;
     cursor: pointer;
-    background-color:   rgb(100, 58, 179);
+    background-color:  rgb(226, 178, 90);
 }
 button:hover{
     background-color: rgb(255, 182, 47);
     letter-spacing: 0.5px;
     transition: 0.5s;
+}
+
+.btnSearch{
+    display: flex;
+    justify-content: space-between;    
+
+}
+
+.btnSearch button{
+width: 45%;
+}
+
+table{
+    width: 100%;
+    text-align: center;
+    margin: 10px 0;
+    
+}
+
+table th{
+    text-transform: uppercase;
+}
+
+th,td{
+    padding: 5px;
 }
