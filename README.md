@@ -3,6 +3,7 @@
 CRUDS is a simple Product Management System that allows users to Create, Read, Update, and Delete (CRUD) products. It is designed to help manage product information efficiently using vanilla JavaScript, HTML, and CSS with data stored in the browser's local storage.
 
 ## Table of Contents
+- [Demo](https://mohamed-khaled0.github.io/Product-Management-System-CRUD/)
 - [Project Overview](#project-overview)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
