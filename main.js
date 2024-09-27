@@ -43,14 +43,14 @@ if(localStorage.products != null){
 
 createButton.onclick = function () {
 let newPro = {
-    title:title.value,
+    title:title.value.toLowerCase(),
     price:price.value,
     ads:ads.value,
     taxes:taxes.value,
     discount:discount.value,
     total:total.innerHTML,
     count:count.value,
-    categoryField:categoryField.value
+    categoryField:categoryField.value.toLowerCase()
 }
 
 if(mood === 'create'){
@@ -69,17 +69,9 @@ if(mood === 'create'){
 }
 
 
-
-
-
-
-
-
-
 localStorage.setItem("products" , JSON.stringify(dataPro)); // stringify To change the type of data 
 clearData();
 showData ();
-
 }
 
 
@@ -164,5 +156,63 @@ function updateProduct(i){
 
 
 
+let searchMood = 'title';
+
+function getSearchMood(id){
+
+    if(id === 'searchTitleBtn'){
+        searchField.placeholder = 'Search By Title'
+        searchMood = 'title';
+    }else{
+        searchMood = 'category';
+        searchField.placeholder = 'Search By Category'
+    }
+    searchField.focus();
+    searchField.value='';
+    showData();
+}
+
 //search
-// cleaning data for search 
+function searchData(value){
+    let table = '';
+if(searchMood === 'title'){
+
+for(let i =0 ; i<dataPro.length ; i++){
+if(dataPro[i].title.includes(value.toLowerCase())){
+    table +=   // +  => To keep all old products 
+    `<tr>
+                            <td>${i+1}</td>
+                            <td>${dataPro[i].title}</td>
+                            <td>${dataPro[i].price}</td>
+                            <td>${dataPro[i].taxes}</td>
+                            <td>${dataPro[i].ads}</td>
+                            <th>${dataPro[i].discount}</th>
+                            <td>${dataPro[i].total}</td>
+                            <td>${dataPro[i].categoryField}</td>
+                            <td><button   onclick ="updateProduct(${i});"id="update" >update</button></td>
+                            <td><button onclick ="deleteProduct(${i});" id="delete" >delete</button></td>
+    </tr>`;
+    }
+}
+}else{
+    for(let i =0 ; i<dataPro.length ; i++){
+        if(dataPro[i].categoryField.includes(value.toLowerCase())){
+            table +=   // +  => To keep all old products 
+            `<tr>
+                                    <td>${i+1}</td>
+                                    <td>${dataPro[i].title}</td>
+                                    <td>${dataPro[i].price}</td>
+                                    <td>${dataPro[i].taxes}</td>
+                                    <td>${dataPro[i].ads}</td>
+                                    <th>${dataPro[i].discount}</th>
+                                    <td>${dataPro[i].total}</td>
+                                    <td>${dataPro[i].categoryField}</td>
+                                    <td><button   onclick ="updateProduct(${i});"id="update" >update</button></td>
+                                    <td><button onclick ="deleteProduct(${i});" id="delete" >delete</button></td>
+            </tr>`;
+            }
+        }
+}
+document.getElementById('tbody').innerHTML = table;
+
+}
