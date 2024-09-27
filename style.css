@@ -31,6 +31,8 @@ input{
     border-radius: 5px;
     padding: 10px;
     color: white;
+    transition: 0.5s;
+
 }
 
 input:focus{

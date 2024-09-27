@@ -12,11 +12,11 @@ let searchTitleBtn = document.getElementById("searchTitleBtn");
 let categoryBtn = document.getElementById("categoryBtn"); 
 
 
-// console.log(title,price,taxes,ads,discount,total,count,categoryField,submitButton,submitButton,searchField,searchTitleBtn,categoryBtn)
 
 
 
-
+let mood = 'create';
+let tmp;
 
 
 //get total 
@@ -33,11 +33,11 @@ if(price.value != ''){
 }
 
 // Create Products & Store Data using LocalStorage
-
+let dataPro;
 if(localStorage.products != null){
     dataPro = JSON.parse(localStorage.products); // Parse To change the type of data & And then add the new data to  dataPro Array
 }else{
-    let dataPro = [];
+ dataPro = [];
 
 }
 
@@ -52,11 +52,34 @@ let newPro = {
     count:count.value,
     categoryField:categoryField.value
 }
-dataPro.push(newPro); // Save data into this array 
+
+if(mood === 'create'){
+    if(newPro.count > 1){
+        for(let i = 0 ;i<newPro.count;i++){
+            dataPro.push(newPro); // Save data into this array 
+        }
+    }else{
+        dataPro.push(newPro);
+    }
+}else{
+    dataPro[tmp] = newPro;
+    mood = 'create';
+    createButton.innerHTML = 'Create';
+    count.style.display = 'block';
+}
+
+
+
+
+
+
+
+
+
 localStorage.setItem("products" , JSON.stringify(dataPro)); // stringify To change the type of data 
-console.log(dataPro);
 clearData();
 showData ();
+
 }
 
 
@@ -78,7 +101,7 @@ let table = ''
 for(let i = 0 ; i < dataPro.length ; i++ ){
     table +=   // +  => To keep all old products 
 `<tr>
-                        <td>2${i}</td>
+                        <td>${i+1}</td>
                         <td>${dataPro[i].title}</td>
                         <td>${dataPro[i].price}</td>
                         <td>${dataPro[i].taxes}</td>
@@ -86,15 +109,22 @@ for(let i = 0 ; i < dataPro.length ; i++ ){
                         <th>${dataPro[i].discount}</th>
                         <td>${dataPro[i].total}</td>
                         <td>${dataPro[i].categoryField}</td>
-                        <td><button id="update" >update</button></td>
+                        <td><button   onclick ="updateProduct(${i});"id="update" >update</button></td>
                         <td><button onclick ="deleteProduct(${i});" id="delete" >delete</button></td>
 </tr>`;
 }
 document.getElementById('tbody').innerHTML = table;
+let btnDeleteAll = document.getElementById('btnDeleteAll');
+if(dataPro . length >0){
+    btnDeleteAll.innerHTML = `<button onclick ="deleteAllProducts();" >Delete All Products (${dataPro.length})</button>`
+}else{
+btnDeleteAll.innerHTML = '';
+}
+getTotal();
+
 }
 showData ();
 
-//count 
 
 //delete 
 function deleteProduct(i){
@@ -103,6 +133,36 @@ localStorage.products = JSON.stringify(dataPro);
 showData ();
 
 }
+
+
+function deleteAllProducts() {
+localStorage.clear();
+dataPro.splice(0);
+showData();
+}
+
+
 // update
+function updateProduct(i){
+    title.value = dataPro[i].title ;
+    price.value= dataPro[i].price ;
+    ads.value= dataPro[i].ads ;
+    taxes.value= dataPro[i].taxes ;
+    discount.value= dataPro[i].discount ;
+    total.innerHTML= dataPro[i].total ;
+    categoryField.value= dataPro[i].categoryField ;
+    getTotal();
+    count.style.display = 'none';
+    createButton.innerHTML = 'Update';
+    mood = 'update';
+    tmp = i ;
+    scroll({
+        top:0,
+        behavior:'smooth'
+    })
+}
+
+
+
 //search
 // cleaning data for search 
