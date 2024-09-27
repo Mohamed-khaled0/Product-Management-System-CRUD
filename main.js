@@ -11,15 +11,10 @@ let searchField = document.getElementById("search");
 let searchTitleBtn = document.getElementById("searchTitleBtn"); 
 let categoryBtn = document.getElementById("categoryBtn"); 
 
-
-
-
-
 let mood = 'create';
 let tmp;
 
-
-//get total 
+//get total to calculate  the price and ads , tax ,...
 function getTotal () {
 if(price.value != ''){
     let result = (+price.value + +taxes.value + +ads.value) -   +discount.value;
@@ -53,20 +48,23 @@ let newPro = {
     categoryField:categoryField.value.toLowerCase()
 }
 
-if(mood === 'create'){
-    if(newPro.count > 1){
-        for(let i = 0 ;i<newPro.count;i++){
-            dataPro.push(newPro); // Save data into this array 
+if(title.value != '' && price.value != '' &&  count.value <1000 && categoryField.value != ''){
+    if(mood === 'create'){
+        if(newPro.count > 1){
+            for(let i = 0 ;i<newPro.count;i++){
+                dataPro.push(newPro); // Save data into this array 
+            }
+        }else{
+            dataPro.push(newPro);
         }
     }else{
-        dataPro.push(newPro);
+        dataPro[tmp] = newPro;
+        mood = 'create';
+        createButton.innerHTML = 'Create';
+        count.style.display = 'block';
     }
-}else{
-    dataPro[tmp] = newPro;
-    mood = 'create';
-    createButton.innerHTML = 'Create';
-    count.style.display = 'block';
 }
+
 
 
 localStorage.setItem("products" , JSON.stringify(dataPro)); // stringify To change the type of data 
@@ -118,7 +116,7 @@ getTotal();
 showData ();
 
 
-//delete 
+//delete function
 function deleteProduct(i){
 dataPro.splice(i,1); // there is a deleting here but only on array 
 localStorage.products = JSON.stringify(dataPro);
@@ -126,6 +124,7 @@ showData ();
 
 }
 
+//delete all function
 
 function deleteAllProducts() {
 localStorage.clear();
@@ -134,7 +133,7 @@ showData();
 }
 
 
-// update
+// updateProduct function
 function updateProduct(i){
     title.value = dataPro[i].title ;
     price.value= dataPro[i].price ;
@@ -161,12 +160,13 @@ let searchMood = 'title';
 function getSearchMood(id){
 
     if(id === 'searchTitleBtn'){
-        searchField.placeholder = 'Search By Title'
         searchMood = 'title';
     }else{
         searchMood = 'category';
-        searchField.placeholder = 'Search By Category'
     }
+
+    searchField.placeholder = 'Search By ' + searchMood;
+
     searchField.focus();
     searchField.value='';
     showData();
@@ -214,5 +214,4 @@ if(dataPro[i].title.includes(value.toLowerCase())){
         }
 }
 document.getElementById('tbody').innerHTML = table;
-
 }
